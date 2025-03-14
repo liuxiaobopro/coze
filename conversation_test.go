@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestMain(t *testing.T) {
+func TestClient_CreateConversation(t *testing.T) {
 	fileBytes, err := os.ReadFile("coze_oauth_config.json")
 	if err != nil {
 		log.Fatalf("Error reading config file: %v", err)
@@ -24,10 +24,18 @@ func TestMain(t *testing.T) {
 		log.Fatalf("Error creating client: %v", err)
 	}
 
-	resp, err := cc.get("/v1/workspaces")
+	resp, err := cc.CreateConversation(&ConversationReq{
+		Messages: []ConversationEnterMessage{
+			{
+				Role:    "user",
+				Content: "你好",
+			},
+		},
+	})
 	if err != nil {
-		log.Fatalf("Error getting workspaces: %v", err)
+		log.Fatalf("Error creating conversation: %v", err)
 	}
 
-	fmt.Println(string(resp))
+	fmt.Println(resp.Data.ID)
+
 }
