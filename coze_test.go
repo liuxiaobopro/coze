@@ -24,7 +24,7 @@ func TestMain(t *testing.T) {
 		log.Fatalf("Error creating client: %v", err)
 	}
 
-	resp, err := cc.get("/v1/workspaces")
+	resp, err := cc.get("/v1/workspaces", nil)
 	if err != nil {
 		log.Fatalf("Error getting workspaces: %v", err)
 	}

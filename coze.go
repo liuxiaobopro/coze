@@ -105,8 +105,11 @@ func (c Client) post(api string, body any) ([]byte, error) {
 
 }
 
-func (c Client) get(api string) ([]byte, error) {
+func (c Client) get(api string, query Query) ([]byte, error) {
 	api = c.OAuthConfig.CozeAPIBase + api
+	if query != nil {
+		api += "?" + query.Encode()
+	}
 
 	request, err := http.NewRequest(http.MethodGet, api, nil)
 	if err != nil {
