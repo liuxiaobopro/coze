@@ -40,7 +40,7 @@ type CreateConversationResp struct {
 func (c Client) CreateConversation(body *CreateConversationBody) (*CreateConversationResp, error) {
 	api := "/v1/conversation/create"
 
-	b, err := c.post(api, body)
+	b, err := c.post(api, body, nil)
 	if err != nil {
 		return nil, err
 	}
