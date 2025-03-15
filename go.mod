@@ -1,4 +1,4 @@
-module coze
+module github.com/hagrid-dev/coze
 
 go 1.22
 

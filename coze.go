@@ -69,13 +69,17 @@ func NewClient(c *CozeOAuthConfig) (*Client, error) {
 	}, nil
 }
 
-func (c Client) post(api string, body any) ([]byte, error) {
+func (c Client) post(api string, body any, args ...any) ([]byte, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal body: %v", err)
 	}
 
 	api = c.OAuthConfig.CozeAPIBase + api
+	if len(args) > 0 {
+		query := args[0].(Query)
+		api += "?" + query.Encode()
+	}
 
 	request, err := http.NewRequest(http.MethodPost, api, bytes.NewBuffer(jsonBody))
 	if err != nil {
